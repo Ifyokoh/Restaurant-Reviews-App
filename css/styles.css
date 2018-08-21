@@ -150,7 +150,7 @@ nav h1 a {
   background-color: #fff;
   border-radius: 1rem;
   /* font-family: Arial,sans-serif; */
-  margin: 1rem 0.5rem;
+  margin: 1rem auto;
   min-height: 380px;
   /* padding: 0 10px 25px; */
   text-align: left;
