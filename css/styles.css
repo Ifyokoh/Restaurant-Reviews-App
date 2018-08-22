@@ -424,7 +424,7 @@ nav h1 a {
 }
 
 @media (max-width: 790px) {
-  #maincontent {
+  .inside #maincontent {
     display: flex;
     flex-wrap: wrap;
   }
@@ -475,7 +475,7 @@ nav h1 a {
   #restaurant-hours {
     padding: 0 1em 1em;
   }
-  
+
   #restaurant-address {
     padding: 0 1em;
   }
