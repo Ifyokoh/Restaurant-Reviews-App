@@ -1,0 +1,22 @@
+{
+  "short_name": "MWS",
+  "name": "Restaurant Review App",
+  "icons": [
+    {
+      "src": "img/icon.png",
+      "type": "image/png",
+      "sizes": "225x225"
+    },
+    {
+        "src": "img/icon.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#252831",
+  "background_color": "#252831"
+}
