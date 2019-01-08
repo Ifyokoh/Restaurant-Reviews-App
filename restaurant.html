@@ -53,6 +53,21 @@
     <!-- end restaurant -->
     <!-- Beginning reviews -->
     <section id="reviews-container">
+        <h3>Add Review</h3>
+        <form onsubmit="return reviewRestaurant();" id="review-form">
+          <input type="text" placeholder="Name" id="review-name"><br><br>
+          <select name="review-rating" id="review-rating">
+            <option value="none" disabled selected>Select Rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select><br><br>
+          <textarea name="review-comment" id="review-comment" rows="5" placeholder="Comment"></textarea><br><br>
+          <input type="submit">
+        </form><br><br>
+        
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
