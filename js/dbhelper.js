@@ -9,51 +9,65 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}`;
   }
 
-  static createIDBStore(restaurants) {
-    // Get compatible IndexedDB version
+  static RestaurantsStore(restaurants) {
     var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-    // Open the database
-    var open = indexedDB.open("RestaurantDB", 1);
+    var open = indexedDB.open("db", 1);
 
     open.onupgradeneeded = function() {
       var db = open.result;
-      var store = db.createObjectStore("RestaurantStore", {keyPath: "id"});
-      var index = store.createIndex("by-id", "id");
+      db.createObjectStore("RestaurantStore", { keyPath: "id" });
+      restaurants.forEach(function(restaurant) {
+        db.createObjectStore("ReviewsStore-" + restaurant.id, { keyPath: "id" });
+      });
     };
-
     open.onerror = function(err) {
-      console.error("Something went wrong with IndexDB: " + err.target.errorCode);
+      console.error("Something went wrong: " + err.target.errorCode);
     }
-
     open.onsuccess = function() {
-      // Start a new transaction
       var db = open.result;
       var tx = db.transaction("RestaurantStore", "readwrite");
       var store = tx.objectStore("RestaurantStore");
-      var index = store.index("by-id");
-
-      // Add the restaurant data
       restaurants.forEach(function(restaurant) {
         store.put(restaurant);
       });
-
-      // Close the db when the transaction is done
       tx.oncomplete = function() {
         db.close();
       };
     }
   }
 
+  static ReviewsStore(restaurantId, reviews) {
+    var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+    var open = indexedDB.open("db", 1);
+    open.onupgradeneeded = function() {
+      var db = open.result;
+      db.createObjectStore("ReviewsStore-" + restaurantId, { keyPath: "id" });
+    };
+    open.onerror = function(err) {
+      console.error("Something went wrong: " + err.target.errorCode);
+    }
+    open.onsuccess = function() {
+      var db = open.result;
+      var tx = db.transaction("ReviewsStore-" + restaurantId, "readwrite");
+      var store = tx.objectStore("ReviewsStore-" + restaurantId);
+      reviews.forEach(function(review) {
+        store.put(review);
+      });
+      tx.oncomplete = function() {
+        db.close();
+      };
+    }
+  }
+
+
   static getCachedData(callback) {
     var restaurants = [];
-
     // Get IndexedDB version
     var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-    var open = indexedDB.open("RestaurantDB", 1);
+    var open = indexedDB.open("db", 1);
 
     open.onsuccess = function() {
       // new transaction
@@ -65,7 +79,6 @@ class DBHelper {
       getData.onsuccess = function() {
         callback(null, getData.result);
       }
-
       // Close transaction is done
       tx.oncomplete = function() {
         db.close();
@@ -79,22 +92,19 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
     if (navigator.onLine) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Success!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json;
-          DBHelper.createIDBStore(restaurants); // Cache restaurants
-        callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
-      }
-    };
-    xhr.send();
+      fetch(`${DBHelper.DATABASE_URL}/restaurants`)
+        .then(res => res.json())
+        .then(restaurants => {
+          console.log(restaurants)
+          DBHelper.RestaurantsStore(restaurants); // Cache restaurants
+          callback(null, restaurants);
+        })
+        .catch(err => {
+          const error = `Try again`;
+          callback(error, null);
+        })
         } else {
-      console.log('you are offline - Retrieve data from cache!');
+      console.log('you are offline - Get data from cache!');
       DBHelper.getCachedData((error, restaurants) => {
         if (restaurants.length > 0) {
           callback(null, restaurants);
@@ -121,6 +131,8 @@ class DBHelper {
       }
     });
   }
+
+  
 
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
