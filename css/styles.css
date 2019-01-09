@@ -218,6 +218,15 @@ nav h1 a {
   padding: 0 1rem;
 }
 
+#restaurants-list li button {
+  float: right;
+  margin: 0 1.5rem;
+}
+
+.fav {
+  color: #f18200;
+}
+
 #restaurants-list p {
   margin: 0;
   font-size: 1.2em;
@@ -468,6 +477,7 @@ nav h1 a {
     width: 100%;
     padding: 0.5em;
   }
+
 
   #details { 
     padding: 0.5em;

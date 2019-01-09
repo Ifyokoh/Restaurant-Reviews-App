@@ -168,6 +168,28 @@ createRestaurantHTML = (restaurant) => {
   name.innerHTML = restaurant.name;
   li.append(name);
 
+  const favourite = document.createElement('button');
+  favourite.innerHTML = '❤';
+  favourite.onclick = function() {
+    const isFavNow = !restaurant.is_favorite;
+    DBHelper.FavouriteStatusUpdate(restaurant.id, isFavNow);
+    restaurant.is_favorite = !restaurant.is_favorite
+    changeFavElementClass(favourite, restaurant.is_favorite)
+  };
+  li.append(favourite);
+  
+  changeFavElementClass = (element, fav) => {
+    if (!fav) {
+      element.classList.add('fav');
+      element.setAttribute('aria-label', 'mark as favorite');
+  
+    } else {
+      element.classList.remove('fav');
+      element.setAttribute('aria-label', 'remove as favorite');
+  
+    }
+  }
+
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
   li.append(neighborhood);
@@ -180,7 +202,7 @@ createRestaurantHTML = (restaurant) => {
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more)
-
+  
   return li
 }
 

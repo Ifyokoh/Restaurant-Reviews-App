@@ -132,7 +132,16 @@ class DBHelper {
     });
   }
 
-  
+  /**
+   * Favourite.
+   */
+  static FavouriteStatusUpdate(restaurantId, isFav) {
+    const url = DBHelper.DATABASE_URL + '/restaurants/' + restaurantId + '/?is_favorite=' + isFav;
+    fetch(url, { method: 'put' })
+      .then(res => callback(null, 1))
+      .catch(err => callback(err, null));
+
+  }
 
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
