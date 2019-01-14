@@ -76,6 +76,33 @@ fetchRestaurantFromURL = (callback) => {
   }
 }
 
+
+/**
+ * Get restaurant reviews from page URL.
+ */
+const fetchReviewsFromURL = (callback) => {
+  if (self.reviews) { // review already fetched!
+    callback(null, self.reviews)
+    return;
+  }
+  const id = getParameterByName('id');
+  if (!id) { // no id found in URL
+    error = 'No review id in URL'
+    console.log('no id found')
+    callback(error, null);
+  } else {
+    DBHelper.fetchReviewsByRestaurantId(id, (error, reviews) => {
+      self.reviews = reviews;
+      if (!reviews) {
+        fillReviewsHTML(null);
+        return;
+      }
+      fillReviewsHTML();
+    });
+  }
+}
+
+
 /**
  * Create restaurant HTML and add it to the webpage
  */
@@ -101,7 +128,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     fillRestaurantHoursHTML();
   }
   // fill reviews
-  fillReviewsHTML();
+  fetchReviewsFromURL();
 }
 
 /**
@@ -208,4 +235,40 @@ getParameterByName = (name, url) => {
   if (!results[2])
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+/**
+ * Review form.
+ */
+const reviewRestaurant = (restaurant = self.restaurant) => {
+  // let id = restaurant.id;
+  let restaurantId = document.getElementById("restId").value;
+  let name = document.getElementById("review-name").value;
+  let rating = document.getElementById("review-rating").value;
+  let message = document.getElementById("review-comment").value;
+
+  if (name != "" && message != "") {
+    let review = {
+      // restaurant_id: id,
+      restaurant_id: restaurantId,
+      name: name,
+      rating: rating,
+      comments: message,
+    }
+
+    fetch("http://localhost:1337/reviews/", {
+      method: "POST",
+      headers: new Headers({
+          "content-type": "application/json"
+      }),
+      body: JSON.stringify(review)
+  }).then(function (res) {
+      if (res.ok) {
+          window.location.reload();
+      }
+  });
+    
+  }
+
+  return false;
 }

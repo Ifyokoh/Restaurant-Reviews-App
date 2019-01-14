@@ -143,6 +143,42 @@ class DBHelper {
 
   }
 
+/**
+   * Fetch all reviews.
+   */
+  static fetchReviews(callback) {
+    const url = DBHelper.DATABASE_URL + '/reviews';
+    fetch(url)
+      .then(res => res.json())
+      .then(reviews => {
+        callback(null, reviews);
+      })
+      .catch(err => {
+        const error = `Request failed. Returned status of ${err.status}`;
+        callback(error, null);
+      })
+  }
+
+  /**
+   * Fetch reviews by id.
+   */
+  static fetchReviewsByRestaurantId(id, callback) {
+    const url = DBHelper.DATABASE_URL + '/reviews/?restaurant_id=' + id;
+    fetch(url)
+      .then(res => res.json())
+      .then(reviews => {
+        reviews = reviews.sort(function(a, b) {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+        DBHelper.ReviewsStore(id, reviews);
+        callback(null, reviews);
+      })
+      .catch(err => {
+        const error = `Request failed. Returned status of ${err.status}`;
+        callback(error, null);
+      })
+  }
+
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
    */
