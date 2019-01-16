@@ -360,16 +360,13 @@ nav h1 a {
   border-radius: 1em;
   display: block;
   list-style-type: none;
-  margin: 0 auto 30px;
+  margin: 0 0 30px;
   overflow: hidden;
-  padding: 1em;
+  padding: 0.5em;
   position: relative;
   width: 85%;
 }
 
-/* #reviews-list li p {
-  margin: 0 0 10px;
-} */
 #restaurant-hours {
   color: #666;
   background-color: #fff;
@@ -410,6 +407,26 @@ nav h1 a {
   text-align: justify;
 }
 
+input[type=text], select, textarea {
+  width: 85%;
+  padding: 12px 20px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  background-color: #333;
+  color: #ddd;
+  font-size: 12pt;
+  font-weight: 300;
+  letter-spacing: 10px;
+  padding: 14px 20px;
+  text-align: center;
+  text-transform: uppercase;
+	width: 85%;
+}
 /* ====================== Media Queries ====================== */
 @media (max-width:326px) {
   #restaurants-list li a {
@@ -484,12 +501,6 @@ nav h1 a {
     margin: 30px 0;
     width: 100%;
   }
-
-  #reviews-list li {
-    margin: 0 0 30px;
-    padding: 0.5em;
-    width: 100%;
-  } 
 
   #restaurant-hours {
     padding: 0 1em 1em;

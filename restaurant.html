@@ -54,7 +54,7 @@
     <!-- Beginning reviews -->
     <section id="reviews-container">
         <h3>Add Review</h3>
-        <form id="review-form">
+        <form id="review-form" method="POST">
           <input type="text" placeholder="Name"  name="review-name" id="review-name"><br><br>
           <select aria-label="review-rating" name="review-rating" id="review-rating">
             <option value="none" disabled selected>Select Rating</option>
@@ -64,12 +64,13 @@
             <option value="4">4</option>
             <option value="5">5</option>
           </select><br><br>
-          <textarea name="review-comment" id="review-comment" rows="5" placeholder="Comment"></textarea><br><br>
-          <input type="hidden" name="restaurant_id" id="restId">
-          <!-- <input type="submit" value="Add Review"> -->
-          <button class="submit-button" onclick="reviewRestaurant()">Add Review</button>
+          <textarea name="review-comment" id="review-comment" placeholder="Comment" rows="10"></textarea><br><br>
+          <!-- <input type="hidden" name="restaurant_id" id="restId"> -->
+          <input type="submit" value="Add Review">
+          <!-- <button class="submit-button" onclick="reviewRestaurant()">Add Review</button> -->
         </form><br><br>
 
+        <h3>Reviews</h3>
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->

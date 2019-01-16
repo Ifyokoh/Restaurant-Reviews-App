@@ -128,7 +128,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     fillRestaurantHoursHTML();
   }
   // fill reviews
-  fetchReviewsFromURL();
+  fillReviewsHTML();
 }
 
 /**
@@ -155,12 +155,13 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = () => {
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h3');
-  title.innerHTML = 'Reviews';
-  container.appendChild(title);
-
+  // const title = document.createElement('h3');
+  // title.innerHTML = 'Reviews';
+  // container.appendChild(title);
+  DBHelper.fetchReviewsByRestaurantId(self.restaurant.id)
+  .then(reviews => {
   if (!reviews) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
@@ -169,9 +170,13 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   }
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
-    ul.appendChild(createReviewHTML(review));
+    ul.appendChild(newReview(review));
   });
   container.appendChild(ul);
+})
+.catch(error => {
+  console.log(error);
+});
 }
 
 /**
@@ -235,40 +240,93 @@ getParameterByName = (name, url) => {
   if (!results[2])
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+};
+realDate = d => {
+  const date = new Date(d);
+  const months = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December',];
+  const day = date.getDate();
+  const index = date.getMonth();
+  const year = date.getFullYear();
+  return `${day} ${months[index]} ${year}`;
+};
 
 /**
  * Review form.
  */
-const reviewRestaurant = (restaurant = self.restaurant) => {
-  // let id = restaurant.id;
-  let restaurantId = document.getElementById("restId").value;
+  const form = document.querySelector('form');
+  form.addEventListener('submit', e => {
+  e.preventDefault();
+  let formData = new FormData(form);
   let name = document.getElementById("review-name").value;
   let rating = document.getElementById("review-rating").value;
   let message = document.getElementById("review-comment").value;
 
-  if (name != "" && message != "") {
+  
     let review = {
-      // restaurant_id: id,
-      restaurant_id: restaurantId,
+      restaurant_id: self.restaurant.id,      
       name: name,
       rating: rating,
       comments: message,
+      createdAt: new Date(),
     }
 
     fetch("http://localhost:1337/reviews/", {
       method: "POST",
-      headers: new Headers({
-          "content-type": "application/json"
-      }),
-      body: JSON.stringify(review)
-  }).then(function (res) {
-      if (res.ok) {
-          window.location.reload();
-      }
-  });
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify(review),
+    }).then(function() {
+      newReview(review);
+    })
+    .catch(function(error) {
+      console.log('Request failed', error);
+      newReview(review);
+    });
     
-  }
+  })
 
-  return false;
-}
+
+
+newReview = (review) => {
+  const ul = document.getElementById('reviews-list');
+  var newItem = document.createElement("li");
+
+  const textnode = document.createElement('li');
+
+  const header = document.createElement('div');
+  header.className = 'review-header';
+  textnode.appendChild(header);
+
+  const name = document.createElement('span');
+  name.className = 'reviewer';
+  name.innerHTML = review.name;
+  header.appendChild(name);
+
+  const date = document.createElement('span');
+  date.className = 'review-date';
+  date.innerHTML = realDate(review.createdAt);
+  header.appendChild(date);
+
+  const body = document.createElement('div');
+  body.className = 'review-body';
+  textnode.appendChild(body);
+
+  const rating = document.createElement('span');
+  rating.className = 'review-rating';
+  rating.innerHTML = `Rating: ${review.rating}`;
+  body.appendChild(rating);
+
+  const comments = document.createElement('p');
+  comments.className = 'review-comments';
+  comments.innerHTML = review.comments;
+  body.appendChild(comments);
+
+  newItem.appendChild(textnode);
+  ul.insertBefore(newItem, ul.childNodes[0]);
+
+};
+
+  
+  
