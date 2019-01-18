@@ -169,8 +169,8 @@ fillReviewsHTML = () => {
     return;
   }
   const ul = document.getElementById('reviews-list');
-  reviews.forEach(review => {
-    ul.appendChild(newReview(review));
+  reviews.reverse().forEach(review => {
+    ul.appendChild(createReviewHTML(review));
   });
   container.appendChild(ul);
 })
@@ -196,7 +196,7 @@ createReviewHTML = (review) => {
 
   const date = document.createElement('span');
   date.className = 'review-date';
-  date.innerHTML = review.date;
+  date.innerHTML = realDate(review.createdAt);
   header.appendChild(date);
 
   const body = document.createElement('div');

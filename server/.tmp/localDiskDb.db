@@ -21,7 +21,7 @@
           "Sunday": "12:00 pm - 4:00 pm, 5:30 pm - 11:00 pm"
         },
         "createdAt": 1504095563444,
-        "updatedAt": "2019-01-16T14:45:38.378Z",
+        "updatedAt": "2019-01-18T19:59:59.570Z",
         "id": 1,
         "is_favorite": "false"
       },
@@ -45,8 +45,8 @@
           "Sunday": "12:00 pm - 3:00 pm, 5:00 pm - 11:00 pm"
         },
         "createdAt": 1504095568414,
-        "updatedAt": "2019-01-16T14:32:32.163Z",
-        "is_favorite": "false",
+        "updatedAt": "2019-01-17T10:11:07.609Z",
+        "is_favorite": "true",
         "id": 2
       },
       {
@@ -69,9 +69,9 @@
           "Sunday": "11:30 am - 2:00 am"
         },
         "createdAt": 1504095571434,
-        "updatedAt": "2019-01-15T18:39:18.858Z",
+        "updatedAt": "2019-01-17T10:30:42.100Z",
         "id": 3,
-        "is_favorite": "false"
+        "is_favorite": "true"
       },
       {
         "name": "Katz's Delicatessen",
@@ -1131,6 +1131,87 @@
         "createdAt": "2019-01-16T15:17:25.389Z",
         "updatedAt": "2019-01-16T15:17:25.546Z",
         "id": 99
+      },
+      {
+        "restaurant_id": 3,
+        "name": "ihu",
+        "rating": "5",
+        "comments": "kkkkkkkkkkkkkkkkkkkkkk",
+        "createdAt": "2019-01-17T10:33:44.145Z",
+        "updatedAt": "2019-01-17T10:33:46.330Z",
+        "id": 100
+      },
+      {
+        "restaurant_id": 1,
+        "name": "jjjj",
+        "rating": "5",
+        "comments": "hhhhhhhhhhhhhhhh",
+        "createdAt": "2019-01-17T10:41:16.699Z",
+        "updatedAt": "2019-01-17T10:41:18.751Z",
+        "id": 101
+      },
+      {
+        "restaurant_id": 10,
+        "name": "Ify",
+        "rating": "3",
+        "comments": "iNTERESTING",
+        "createdAt": "2019-01-17T10:50:36.336Z",
+        "updatedAt": "2019-01-17T10:50:37.469Z",
+        "id": 102
+      },
+      {
+        "restaurant_id": 8,
+        "name": "Obi",
+        "rating": "5",
+        "comments": "I think I'm Ok",
+        "createdAt": "2019-01-18T10:08:34.083Z",
+        "updatedAt": "2019-01-18T10:08:35.033Z",
+        "id": 103
+      },
+      {
+        "restaurant_id": 8,
+        "name": "Ike",
+        "rating": "1",
+        "comments": "No way",
+        "createdAt": "2019-01-18T11:37:19.966Z",
+        "updatedAt": "2019-01-18T11:37:20.820Z",
+        "id": 104
+      },
+      {
+        "restaurant_id": 7,
+        "name": "Ada",
+        "rating": "3",
+        "comments": "Better",
+        "createdAt": "2019-01-18T11:38:54.849Z",
+        "updatedAt": "2019-01-18T11:38:55.001Z",
+        "id": 105
+      },
+      {
+        "restaurant_id": 5,
+        "name": "ioiuy",
+        "rating": "3",
+        "comments": "nice work",
+        "createdAt": "2019-01-18T22:32:07.827Z",
+        "updatedAt": "2019-01-18T22:32:10.471Z",
+        "id": 106
+      },
+      {
+        "restaurant_id": 5,
+        "name": "Ada",
+        "rating": "1",
+        "comments": "cvvvvvvvvvvvvv",
+        "createdAt": "2019-01-18T22:36:04.184Z",
+        "updatedAt": "2019-01-18T22:36:04.471Z",
+        "id": 107
+      },
+      {
+        "restaurant_id": 5,
+        "name": "gdgdg",
+        "rating": "none",
+        "comments": "",
+        "createdAt": "2019-01-18T22:38:54.307Z",
+        "updatedAt": "2019-01-18T22:38:54.432Z",
+        "id": 108
       }
     ]
   },
@@ -1186,7 +1267,7 @@
       "id": 10
     },
     "reviews": {
-      "id": 99
+      "id": 108
     }
   }
 }
